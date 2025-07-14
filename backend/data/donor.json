@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Geethanjali",
+    "age": "21",
+    "bloodGroup": "A+",
+    "organ": "-",
+    "contact": "geethanjali0029@gmail.com",
+    "phone": "7842675946",
+    "location": "Tirupathi"
+  },
+  {
+    "name": "Deepika",
+    "age": "19",
+    "bloodGroup": "B+",
+    "organ": "kidney",
+    "contact": "deepika54232@gmail.com",
+    "phone": "7075284257",
+    "location": "kadapa"
+  }
+]

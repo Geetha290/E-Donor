@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eDonor - Home</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="overlay">
+      <!-- Navigation Bar -->
+      <nav>
+        <div class="logo">eDonor</div>
+        <ul>
+          <li><a href="form.html">Donor Registration</a></li>
+          <li><a href="hospital.html">Hospital Registration</a></li>
+          <li><a href="bloodbank.html">Blood Bank Registration</a></li>
+          <li><a href="request.html">Request Donation</a></li>
+          <li><a href="about.html">About</a></li>
+        </ul>
+      </nav>
+
+      <!-- Hero Content -->
+      <div class="content">
+        <h1>Be a Hero, Donate Life</h1>
+        <p>Give the gift of life. Join our blood and organ donor network today.</p>
+        <div>
+          <a href="form.html" class="btn">Become a Donor</a>
+          <a href="hospital.html" class="btn">Register Hospital</a>
+          <a href="bloodbank.html" class="btn">Register Blood Bank</a>
+          <a href="request.html" class="btn secondary">Request Donation</a>
+          <a href="about.html" class="btn">About Us</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Down Button -->
+  <div class="scroll-down">
+    <a href="#about-section">&#8595;</a>
+  </div>
+
+  <!-- About Section -->
+  <section id="about-section" class="about-section">
+    <div class="about-content">
+      <img src="about-img.jpeg" alt="About eDonor" class="about-img" />
+      <div class="about-text">
+        <h2>How eDonor Works</h2>
+        <p>
+          We connect life-saving blood and organ donors with patients in urgent need.
+          Our platform ensures quick access, accurate matches, and a supportive network
+          for both donors and recipients.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search Section -->
+  <section id="search" class="donor-section">
+    <h2>Search Hospitals & Blood Banks</h2>
+
+    <!-- Hospital Search -->
+<section class="donor-section">
+  <h2>Search Hospitals</h2>
+  <input type="text" id="hospitalSearch" placeholder="Enter hospital name or city" style="padding: 10px; width: 80%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc;" />
+  <div id="hospitalResults" class="result-list"></div>
+</section>
+
+<!-- Blood Bank Search -->
+<section class="donor-section">
+  <h2>Search Blood Banks</h2>
+  <input type="text" id="bankSearch" placeholder="Enter blood bank name or city" style="padding: 10px; width: 80%; max-width: 400px; border-radius: 8px; border: 1px solid #ccc;" />
+  <div id="bankResults" class="result-list"></div>
+</section>
+
+  </section>
+
+  <script src="script.js"></script>
+  <footer>2025 eDonor | All rights reserved
+  </footer>
+</body>
+</html>

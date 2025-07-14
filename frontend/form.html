@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>eDonor Registration</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .form-section { display: none; }
+    .form-section.active { display: block; }
+    .form-buttons { text-align: center; margin: 20px 0; }
+    .form-buttons button {
+      margin: 0 10px;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0 15px;
+    }
+    button[type="submit"] {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h1>eDonor Registration Portal</h1>
+    <p>Select the form you want to fill:</p>
+
+    <!-- Button Panel -->
+    <div class="form-buttons">
+      <button onclick="showForm('donorFormSection')">Blood Donor</button>
+      <button onclick="showForm('hospitalFormSection')">Hospital</button>
+      <button onclick="showForm('bloodBankFormSection')">Blood Bank</button>
+    </div>
+
+    <!-- Donor Form -->
+    <div id="donorFormSection" class="form-section active">
+      <h2>Register as a Blood Donor</h2>
+      <form id="donorForm">
+        <input type="text" id="name" name="name" placeholder="Full Name" required />
+        <input type="number" id="age" name="age" placeholder="Age" required />
+        <select id="bloodGroup" name="bloodGroup" required>
+          <option value="">Select Blood Group</option>
+          <option>A+</option><option>A-</option>
+          <option>B+</option><option>B-</option>
+          <option>AB+</option><option>AB-</option>
+          <option>O+</option><option>O-</option>
+        </select>
+        <input type="text" id="organ" name="organ" placeholder="Organ" required />
+        <input type="email" id="contact" name="contact" placeholder="Email" required />
+        <input type="tel" id="phone" name="phone" placeholder="Phone" required />
+        <input type="text" id="location" name="location" placeholder="Location" required />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <!-- Hospital Form -->
+    
+<div id="hospitalFormSection" class="form-section">
+  <h2>Hospital Registration</h2>
+  <form id="hospitalForm" enctype="multipart/form-data">
+    <input type="text" id="hospitalName" name="hospitalName" placeholder="Hospital Name" required />
+    <input type="email" id="hospitalEmail" name="hospitalEmail" placeholder="Email" required />
+    <input type="tel" id="hospitalPhone" name="hospitalPhone" placeholder="Phone" required />
+    <input type="text" id="hospitalCity" name="hospitalCity" placeholder="City" required />
+    
+    <!-- 🔁 New field replacing license -->
+    <input type="text" id="organsAvailable" name="organsAvailable" placeholder="Available Organs (comma separated)" required />
+    
+    <input type="file" id="hospitalImage" name="hospitalImage" accept="image/*" required />
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+
+    <!-- Blood Bank Form -->
+    <div id="bloodBankFormSection" class="form-section">
+      <h2>Blood Bank Registration</h2>
+      <form id="bloodBankForm">
+        <input type="text" id="bankName" name="bankName" placeholder="Bank Name" required />
+        <input type="email" id="bankEmail" name="bankEmail" placeholder="Email" required />
+        <input type="tel" id="bankPhone" name="bankPhone" placeholder="Phone" required />
+        <input type="text" id="bankCity" name="bankCity" placeholder="City" required />
+        <input type="text" id="bankCode" name="bankCode" placeholder="Registration Code" required />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <p id="responseMsg" style="text-align:center; margin-top:20px; color:green;"></p>
+  </div>
+
+  <script>
+    function showForm(formId) {
+      document.querySelectorAll('.form-section').forEach(form => {
+        form.classList.remove('active');
+      });
+      document.getElementById(formId).classList.add('active');
+      document.getElementById("responseMsg").textContent = "";
+    }
+
+    // Donor Submit
+    document.getElementById("donorForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const donor = {
+        name: document.getElementById("name").value,
+        age: document.getElementById("age").value,
+        bloodGroup: document.getElementById("bloodGroup").value,
+        organ: document.getElementById("organ").value,
+        contact: document.getElementById("contact").value,
+        phone: document.getElementById("phone").value,
+        location: document.getElementById("location").value,
+      };
+      fetch("http://localhost:3000/api/donors", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(donor),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("responseMsg").textContent = data.message || "Donor registered!";
+        document.getElementById("responseMsg").style.color = "green";
+        document.getElementById("donorForm").reset();
+      })
+      .catch(() => {
+        document.getElementById("responseMsg").textContent = "Donor registration failed!";
+        document.getElementById("responseMsg").style.color = "red";
+      });
+    });
+
+    // Hospital Submit
+    document.getElementById("hospitalForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = document.getElementById("hospitalForm");
+      const formData = new FormData(form);
+      fetch("http://localhost:3000/api/hospitals", {
+        method: "POST",
+        body: formData,
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("responseMsg").textContent = data.message || "Hospital registered!";
+        document.getElementById("responseMsg").style.color = "green";
+        form.reset();
+      })
+      .catch(() => {
+        document.getElementById("responseMsg").textContent = "Hospital registration failed!";
+        document.getElementById("responseMsg").style.color = "red";
+      });
+    });
+
+    // Blood Bank Submit
+    document.getElementById("bloodBankForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const bank = {
+        bankName: document.getElementById("bankName").value,
+        bankEmail: document.getElementById("bankEmail").value,
+        bankPhone: document.getElementById("bankPhone").value,
+        bankCity: document.getElementById("bankCity").value,
+        bankCode: document.getElementById("bankCode").value,
+      };
+      fetch("http://localhost:3000/api/bloodbanks", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(bank),
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        document.getElementById("responseMsg").textContent = data.message || "Blood Bank registered!";
+        document.getElementById("responseMsg").style.color = "green";
+        document.getElementById("bloodBankForm").reset();
+      })
+      .catch(() => {
+        document.getElementById("responseMsg").textContent = "Blood Bank registration failed!";
+        document.getElementById("responseMsg").style.color = "red";
+      });
+    });
+  </script>
+</body>
+</html>

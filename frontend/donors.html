@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donors - eDonor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f9f9f9;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .donor-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .donor-card {
+      background: #fff;
+      padding: 15px;
+      border-radius: 10px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+      width: 300px;
+    }
+    .donor-card h3 {
+      margin-top: 0;
+      color: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  <h1>eDonor - Donor List</h1>
+  <div id="donorList" class="donor-container">
+    <p>Loading donors...</p>
+  </div>
+
+  <script>
+    async function loadDonors() {
+      const listContainer = document.getElementById('donorList');
+      try {
+        const res = await fetch('http://localhost:3000/api/donors');
+        if (!res.ok) throw new Error('Failed to fetch');
+        const donors = await res.json();
+        listContainer.innerHTML = '';
+        if (!donors.length) {
+          listContainer.innerHTML = '<p>No donors registered yet.</p>';
+          return;
+        }
+        donors.forEach(donor => {
+          const card = document.createElement('div');
+          card.className = 'donor-card';
+          card.innerHTML = `
+            <h3>${donor.name || 'Unnamed'}</h3>
+            <p><strong>Age:</strong> ${donor.age || 'N/A'}</p>
+            <p><strong>Blood Group:</strong> ${donor.bloodGroup || 'N/A'}</p>
+            <p><strong>Organ:</strong> ${donor.organ || 'N/A'}</p>
+            <p><strong>Location:</strong> ${donor.location || 'N/A'}</p>
+            <p><strong>Contact:</strong> ${donor.contact || 'N/A'}</p>
+          `;
+          listContainer.appendChild(card);
+        });
+      } catch (err) {
+        listContainer.innerHTML = '<p style="color:red;">Error loading donors.</p>';
+      }
+    }
+
+    loadDonors();
+  </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+[
+  {
+    "bankName": "Red cross Blood bank",
+    "bankEmail": "redcrosskadapa@gmail.com",
+    "bankPhone": "9985123456",
+    "bankCity": "kadapa",
+    "bankCode": "BB001"
+  },
+  {
+    "bankName": "RIMS blood bank",
+    "bankEmail": "rimsbloodblank.kdp@ap.gov.in",
+    "bankPhone": "9494567890",
+    "bankCity": "kadapa",
+    "bankCode": "BB004"
+  },
+  {
+    "bankName": "Government general Hospital Blood Bank",
+    "bankEmail": "gghbloodblank.kdp@gmail.com",
+    "bankPhone": "9440876543",
+    "bankCity": "kadapa",
+    "bankCode": "BB002"
+  },
+  {
+    "bankName": "sri Balaji Blood Bank",
+    "bankEmail": "sbloodbank@gmail.com",
+    "bankPhone": "9848012345",
+    "bankCity": "kadapa",
+    "bankCode": "BB005"
+  },
+  {
+    "bankName": "Apollo Blood Bank Kadapa",
+    "bankEmail": "apollabbank.kdp@gmail.com",
+    "bankPhone": "9900123456",
+    "bankCity": "Kadapa",
+    "bankCode": "BB008"
+  }
+]

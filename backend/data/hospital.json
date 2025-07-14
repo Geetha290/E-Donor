@@ -1,0 +1,81 @@
+[
+  {
+    "hospitalName": "Rajiv Gandhi Institute of medical sciences(RIMS)",
+    "hospitalEmail": "rims.kadapa@gmail.com",
+    "hospitalPhone": "08562220200",
+    "hospitalCity": "kadapa",
+    "license": "HOSP001",
+    "image": "/hospitals/1751103018118-Hosp1.jpg"
+  },
+  {
+    "hospitalName": "fathima institute of medical sciences(fims)",
+    "hospitalEmail": "fims.kadapa.ap@gmail.com",
+    "hospitalPhone": "9440941709",
+    "hospitalCity": "kadapa",
+    "license": "HOSP002",
+    "image": "/hospitals/1751105009805-Hosp2.jpg"
+  },
+  {
+    "hospitalName": "Sri Vani hospitals",
+    "hospitalEmail": "srivanihospital@gmail.com",
+    "hospitalPhone": "9985123467",
+    "hospitalCity": "kadapa",
+    "license": "HOSP003",
+    "image": "/hospitals/1751105133265-Hosp3.jpg"
+  },
+  {
+    "hospitalName": "Apollo hospitals",
+    "hospitalEmail": "apollokadapa@gmail.com",
+    "hospitalPhone": "9885123456",
+    "hospitalCity": "kadapa",
+    "license": "HOSP004",
+    "image": "/hospitals/1751105226410-Hosp4.jpg"
+  },
+  {
+    "hospitalName": "Area hospital pulivendula",
+    "hospitalEmail": "Areahospitalpulivendula@gmail.com",
+    "hospitalPhone": "9491234567",
+    "hospitalCity": "pulivendula",
+    "license": "HOSP005",
+    "image": "/hospitals/1751105335387-Hosp5.jpg"
+  },
+  {
+    "hospitalName": "District hospital proddatur",
+    "hospitalEmail": "dirstrictproddatur@gmail.com",
+    "hospitalPhone": "8123456789",
+    "hospitalCity": "proddatur",
+    "image": "/hospitals/1751549878771-HOSP6.jpg"
+  },
+  {
+    "hospitalName": "SVRR Government General Hospital",
+    "hospitalEmail": "svrrgh@gmail.com",
+    "hospitalPhone": "08772286290",
+    "hospitalCity": "Tirupathi",
+    "license": "HOSP007",
+    "image": "/hospitals/1751549996638-Hosp7.jpg"
+  },
+  {
+    "hospitalName": "Aswini Hospital Tirumala",
+    "hospitalEmail": "aswini.tirumala@gmail.com",
+    "hospitalPhone": "08772277477",
+    "hospitalCity": "Tirumala",
+    "license": "HOSP008",
+    "image": "/hospitals/1751550078973-Hosp8.jpg"
+  },
+  {
+    "hospitalName": "Sri Vani hospitals",
+    "hospitalEmail": "srivanihospital@gmail.com",
+    "hospitalPhone": "9440941709",
+    "hospitalCity": "proddatur",
+    "availableOrgans": "kidney",
+    "image": "/hospitals/1752077350741-Hosp3.jpg"
+  },
+  {
+    "hospitalName": "Rajiv Gandhi Institute of medical sciences(RIMS)",
+    "hospitalEmail": "rims.kadapa@gmail.com",
+    "hospitalPhone": "9502777421",
+    "hospitalCity": "kadapa",
+    "availableOrgans": "kidney",
+    "image": "/hospitals/1752250625747-Hosp1.jpg"
+  }
+]

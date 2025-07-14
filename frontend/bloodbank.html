@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Registered Blood Banks - eDonor</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #b30000;
+    }
+    .bank-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+    .bank-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 300px;
+      padding: 15px;
+      text-align: center;
+    }
+    .bank-card h3 {
+      margin: 10px 0;
+      color: #800000;
+    }
+    .bank-card p {
+      margin: 5px 0;
+      color: #444;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Registered Blood Banks</h1>
+  <div id="bankList" class="bank-grid">
+    <p>Loading...</p>
+  </div>
+
+  <script>
+    async function loadBanks() {
+      const container = document.getElementById("bankList");
+      try {
+        const res = await fetch("http://localhost:3000/api/bloodbanks");
+        const banks = await res.json();
+        if (!banks.length) {
+          container.innerHTML = "<p>No blood banks registered.</p>";
+          return;
+        }
+        container.innerHTML = "";
+        banks.forEach(b => {
+          const card = document.createElement("div");
+          card.className = "bank-card";
+          card.innerHTML = `
+            <h3>${b.bankName}</h3>
+            <p><strong>City:</strong> ${b.bankCity}</p>
+            <p><strong>Phone:</strong> ${b.bankPhone}</p>
+            <p><strong>Email:</strong> ${b.bankEmail}</p>
+            <p><strong>Code:</strong> ${b.bankCode}</p>
+          `;
+          container.appendChild(card);
+        });
+      } catch (err) {
+        container.innerHTML = "<p style='color:red;'>Error loading blood banks.</p>";
+        console.error("Fetch error:", err);
+      }
+    }
+
+    loadBanks();
+  </script>
+</body>
+</html>

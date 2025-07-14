@@ -83,7 +83,8 @@
       return;
     }
 
-    fetch("http://localhost:3000/api/request-notify", {
+    fetch("https://e-donor-1.onrender.com/api/request-notify",{ 
+
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, organ, bloodGroup, phone }),

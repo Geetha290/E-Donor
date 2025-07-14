@@ -36,6 +36,8 @@ if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 app.use(cors());
 app.use(bodyParser.json());
 app.use(express.static('uploads'));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Multer for hospital image uploads
 const storage = multer.diskStorage({

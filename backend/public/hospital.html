@@ -67,7 +67,7 @@
   <script>
     async function loadHospitals() {
       try {
-        const res = await fetch('http://localhost:3000/api/hospitals');
+        const res = await fetch('http://e-donor-1.onrender.com/api/hospitals');
         const hospitals = await res.json();
         const container = document.getElementById('hospitalList');
         container.innerHTML = '';

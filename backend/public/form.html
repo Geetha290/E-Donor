@@ -118,7 +118,7 @@
         phone: document.getElementById("phone").value,
         location: document.getElementById("location").value,
       };
-      fetch("http://localhost:3000/api/donors", {
+      fetch("http://e-donor-1.onrender.com/api/donors", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(donor),
@@ -140,7 +140,7 @@
       e.preventDefault();
       const form = document.getElementById("hospitalForm");
       const formData = new FormData(form);
-      fetch("http://localhost:3000/api/hospitals", {
+      fetch("http://e-donor-1.onrender.com/api/hospitals", {
         method: "POST",
         body: formData,
       })
@@ -166,7 +166,7 @@
         bankCity: document.getElementById("bankCity").value,
         bankCode: document.getElementById("bankCode").value,
       };
-      fetch("http://localhost:3000/api/bloodbanks", {
+      fetch("http://e-donor-1.onrender.com/api/bloodbanks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bank),

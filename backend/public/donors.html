@@ -44,7 +44,8 @@
     async function loadDonors() {
       const listContainer = document.getElementById('donorList');
       try {
-        const res = await fetch('http://localhost:3000/api/donors');
+        const res = await fetch("https://e-donor-1.onrender.com/api/donors", 
+      );
         if (!res.ok) throw new Error('Failed to fetch');
         const donors = await res.json();
         listContainer.innerHTML = '';

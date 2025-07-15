@@ -51,7 +51,8 @@
     async function loadBanks() {
       const container = document.getElementById("bankList");
       try {
-        const res = await fetch("http://localhost:3000/api/bloodbanks");
+        const res = await fetch("https://e-donor-1.onrender.com/api/bloodbanks",);
+        
         const banks = await res.json();
         if (!banks.length) {
           container.innerHTML = "<p>No blood banks registered.</p>";

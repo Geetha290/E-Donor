@@ -94,9 +94,7 @@
 
   <script>
     function showForm(formId) {
-      document.querySelectorAll('.form-section').forEach(form => {
-        form.classList.remove('active');
-      });
+      document.querySelectorAll('.form-section').forEach(form => form.classList.remove('active'));
       document.getElementById(formId).classList.add('active');
       document.getElementById("responseMsg").textContent = "";
     }
@@ -130,7 +128,7 @@
       });
     });
 
-    // ✅ Fixed Hospital Submit
+    // Hospital Submit
     document.getElementById("hospitalForm").addEventListener("submit", function (e) {
       e.preventDefault();
       const form = document.getElementById("hospitalForm");

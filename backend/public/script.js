@@ -7,7 +7,10 @@ const bankResults = document.getElementById('bankResults');
 // Helper to create a result card
 function createCard(data, type) {
   if (type === 'hospital') {
-    const imageUrl = data.image ? `https://e-donor-1.onrender.com${data.image}` : 'default-hospital.jpg';
+    const imageUrl = data.image
+      ? data.image.startsWith('http') ? data.image : `https://e-donor-1.onrender.com${data.image}`
+      : 'default-hospital.jpg';
+
     return `
       <div class="donor-card">
         <img src="${imageUrl}" alt="${data.hospitalName}" style="width:100%; border-radius:8px; margin-bottom:10px;">
@@ -41,7 +44,7 @@ hospitalSearch?.addEventListener('input', async () => {
   }
 
   try {
-    const res = await fetch(`http://e-donor-1.onrender.com/api/hospitals?query=${encodeURIComponent(query)}`);
+    const res = await fetch(`https://e-donor-1.onrender.com/api/hospitals?query=${encodeURIComponent(query)}`);
     const hospitals = await res.json();
     hospitalResults.innerHTML = hospitals.length
       ? hospitals.map(h => createCard(h, 'hospital')).join('')
@@ -61,7 +64,7 @@ bankSearch?.addEventListener('input', async () => {
   }
 
   try {
-    const res = await fetch(`http://e-donor-1.onrender.com/api/bloodbanks?query=${encodeURIComponent(query)}`);
+    const res = await fetch(`https://e-donor-1.onrender.com/api/bloodbanks?query=${encodeURIComponent(query)}`);
     const banks = await res.json();
     bankResults.innerHTML = banks.length
       ? banks.map(b => createCard(b, 'bank')).join('')

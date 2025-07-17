@@ -62,8 +62,7 @@
       </form>
     </div>
 
-    <!-- Hospital Form -->
-    
+     <!-- Hospital Form -->
 <div id="hospitalFormSection" class="form-section">
   <h2>Hospital Registration</h2>
   <form id="hospitalForm" enctype="multipart/form-data">
@@ -71,14 +70,18 @@
     <input type="email" id="hospitalEmail" name="hospitalEmail" placeholder="Email" required />
     <input type="tel" id="hospitalPhone" name="hospitalPhone" placeholder="Phone" required />
     <input type="text" id="hospitalCity" name="hospitalCity" placeholder="City" required />
-    
-    <!-- 🔁 New field replacing license -->
     <input type="text" id="organsAvailable" name="organsAvailable" placeholder="Available Organs (comma separated)" required />
-    
+
+    <!-- File upload input -->
     <input type="file" id="hospitalImage" name="hospitalImage" accept="image/*" required />
+
     <button type="submit">Submit</button>
   </form>
 </div>
+
+
+    
+
 
 
     <!-- Blood Bank Form -->
@@ -118,7 +121,7 @@
         phone: document.getElementById("phone").value,
         location: document.getElementById("location").value,
       };
-      fetch("http://e-donor-1.onrender.com/api/donors", {
+      fetch("https://e-donor-1.onrender.com/api/donors", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(donor),
@@ -134,27 +137,31 @@
         document.getElementById("responseMsg").style.color = "red";
       });
     });
+t
+    // Hospital Submit 
+document.getElementById("hospitalForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  const form = document.getElementById("hospitalForm");
+  const formData = new FormData(form);
 
-    // Hospital Submit
-    document.getElementById("hospitalForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const form = document.getElementById("hospitalForm");
-      const formData = new FormData(form);
-      fetch("http://e-donor-1.onrender.com/api/hospitals", {
-        method: "POST",
-        body: formData,
-      })
-      .then((res) => res.json())
-      .then((data) => {
-        document.getElementById("responseMsg").textContent = data.message || "Hospital registered!";
-        document.getElementById("responseMsg").style.color = "green";
-        form.reset();
-      })
-      .catch(() => {
-        document.getElementById("responseMsg").textContent = "Hospital registration failed!";
-        document.getElementById("responseMsg").style.color = "red";
-      });
+  fetch("https://e-donor-1.onrender.com/api/hospitals", {
+    method: "POST",
+    body: formData,
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      document.getElementById("responseMsg").textContent = data.message || "Hospital registered!";
+      document.getElementById("responseMsg").style.color = "green";
+      form.reset();
+    })
+    .catch(() => {
+      document.getElementById("responseMsg").textContent = "Hospital registration failed!";
+      document.getElementById("responseMsg").style.color = "red";
     });
+});
+
+
+
 
     // Blood Bank Submit
     document.getElementById("bloodBankForm").addEventListener("submit", function (e) {
@@ -166,7 +173,7 @@
         bankCity: document.getElementById("bankCity").value,
         bankCode: document.getElementById("bankCode").value,
       };
-      fetch("http://e-donor-1.onrender.com/api/bloodbanks", {
+      fetch("https://e-donor-1.onrender.com/api/bloodbanks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(bank),

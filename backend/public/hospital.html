@@ -67,7 +67,7 @@
   <script>
     async function loadHospitals() {
       try {
-        const res = await fetch('http://e-donor-1.onrender.com/api/hospitals');
+        const res = await fetch('https://e-donor-1.onrender.com/api/hospitals');
         const hospitals = await res.json();
         const container = document.getElementById('hospitalList');
         container.innerHTML = '';
@@ -77,14 +77,13 @@
           card.className = 'hospital-card';
 
           card.innerHTML = `
-            <img src="${h.image || 'placeholder.jpg'}" alt="${h.hospitalName}" />
+            <img src="https://e-donor-1.onrender.com${h.image || '/placeholder.jpg'}" alt="${h.hospitalName}" />
             <h3>${h.hospitalName}</h3>
             <p><strong>City:</strong> ${h.hospitalCity}</p>
             <p><strong>Phone:</strong> ${h.hospitalPhone}</p>
             <p><strong>Email:</strong> ${h.hospitalEmail}</p>
-            ${h.license ? `<p><strong>License:</strong> ${h.license}</p>` : ''}
-            ${h.availableOrgans ? `<p><strong>Organs:</strong> ${h.availableOrgans}</p>` : ''}
-          `;
+           ${h.organsAvailable ? `<p><strong>Organs:</strong> ${h.organsAvailable}</p>` : ''}
+        `;
 
           container.appendChild(card);
         });

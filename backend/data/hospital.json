@@ -61,21 +61,5 @@
     "hospitalCity": "Tirumala",
     "license": "HOSP008",
     "image": "/hospitals/1751550078973-Hosp8.jpg"
-  },
-  {
-    "hospitalName": "Sri Vani hospitals",
-    "hospitalEmail": "srivanihospital@gmail.com",
-    "hospitalPhone": "9440941709",
-    "hospitalCity": "proddatur",
-    "availableOrgans": "kidney",
-    "image": "/hospitals/1752077350741-Hosp3.jpg"
-  },
-  {
-    "hospitalName": "Rajiv Gandhi Institute of medical sciences(RIMS)",
-    "hospitalEmail": "rims.kadapa@gmail.com",
-    "hospitalPhone": "9502777421",
-    "hospitalCity": "kadapa",
-    "availableOrgans": "kidney",
-    "image": "/hospitals/1752250625747-Hosp1.jpg"
-  }
+  }   
 ]

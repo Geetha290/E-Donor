@@ -9,7 +9,7 @@ const axios = require('axios');
 const twilio = require('twilio');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT ||3000;
 
 // Twilio credentials
 const twilioSID = 'ACc4147ad32927f610604c2ba78904155b';
@@ -35,7 +35,7 @@ if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
 // Middleware
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static('uploads'));
+app.use('/hospitals', express.static(path.join(__dirname, 'uploads', 'hospitals')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 

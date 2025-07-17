@@ -62,27 +62,19 @@
       </form>
     </div>
 
-     <!-- Hospital Form -->
-<div id="hospitalFormSection" class="form-section">
-  <h2>Hospital Registration</h2>
-  <form id="hospitalForm" enctype="multipart/form-data">
-    <input type="text" id="hospitalName" name="hospitalName" placeholder="Hospital Name" required />
-    <input type="email" id="hospitalEmail" name="hospitalEmail" placeholder="Email" required />
-    <input type="tel" id="hospitalPhone" name="hospitalPhone" placeholder="Phone" required />
-    <input type="text" id="hospitalCity" name="hospitalCity" placeholder="City" required />
-    <input type="text" id="organsAvailable" name="organsAvailable" placeholder="Available Organs (comma separated)" required />
-
-    <!-- File upload input -->
-    <input type="file" id="hospitalImage" name="hospitalImage" accept="image/*" required />
-
-    <button type="submit">Submit</button>
-  </form>
-</div>
-
-
-    
-
-
+    <!-- Hospital Form -->
+    <div id="hospitalFormSection" class="form-section">
+      <h2>Hospital Registration</h2>
+      <form id="hospitalForm" enctype="multipart/form-data">
+        <input type="text" id="hospitalName" name="hospitalName" placeholder="Hospital Name" required />
+        <input type="email" id="hospitalEmail" name="hospitalEmail" placeholder="Email" required />
+        <input type="tel" id="hospitalPhone" name="hospitalPhone" placeholder="Phone" required />
+        <input type="text" id="hospitalCity" name="hospitalCity" placeholder="City" required />
+        <input type="text" id="organsAvailable" name="organsAvailable" placeholder="Available Organs (comma separated)" required />
+        <input type="file" id="hospitalImage" name="hospitalImage" accept="image/*" required />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
 
     <!-- Blood Bank Form -->
     <div id="bloodBankFormSection" class="form-section">
@@ -138,30 +130,27 @@
       });
     });
 
-    // Hospital Submit 
-document.getElementById("hospitalForm").addEventListener("submit", function (e) {
-  e.preventDefault();
-  const form = document.getElementById("hospitalForm");
-  const formData = new FormData(form);
+    // ✅ Fixed Hospital Submit
+    document.getElementById("hospitalForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const form = document.getElementById("hospitalForm");
+      const formData = new FormData(form);
 
-  fetch("https://e-donor-1.onrender.com/api/hospitals", {
-    method: "POST",
-    body: formData,
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      document.getElementById("responseMsg").textContent = data.message || "Hospital registered!";
-      document.getElementById("responseMsg").style.color = "green";
-      form.reset();
-    })
-    .catch(() => {
-      document.getElementById("responseMsg").textContent = "Hospital registration failed!";
-      document.getElementById("responseMsg").style.color = "red";
+      fetch("https://e-donor-1.onrender.com/api/hospitals", {
+        method: "POST",
+        body: formData,
+      })
+      .then(async (res) => {
+        const data = await res.json();
+        document.getElementById("responseMsg").textContent = data.message || "Hospital registered!";
+        document.getElementById("responseMsg").style.color = res.ok ? "green" : "red";
+        if (res.ok) form.reset();
+      })
+      .catch(() => {
+        document.getElementById("responseMsg").textContent = "Hospital registration failed!";
+        document.getElementById("responseMsg").style.color = "red";
+      });
     });
-});
-
-
-
 
     // Blood Bank Submit
     document.getElementById("bloodBankForm").addEventListener("submit", function (e) {

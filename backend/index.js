@@ -1,4 +1,5 @@
 console.log("🟢 eDonor server is starting...");
+
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -36,14 +37,14 @@ app.use(bodyParser.json());
 app.use('/hospitals', express.static(path.join(__dirname, 'uploads', 'hospitals')));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Multer for hospital image uploads
+// Multer configuration for hospital image uploads
 const storage = multer.diskStorage({
   destination: (_, __, cb) => cb(null, uploadDir),
   filename: (_, file, cb) => cb(null, Date.now() + '-' + file.originalname)
 });
 const upload = multer({ storage });
 
-// JSON file helpers
+// Helper functions for JSON file operations
 function readJSON(file) {
   try {
     const data = fs.readFileSync(file);
@@ -52,6 +53,7 @@ function readJSON(file) {
     return [];
   }
 }
+
 function writeJSON(file, data) {
   fs.writeFileSync(file, JSON.stringify(data, null, 2));
 }
@@ -60,44 +62,63 @@ function writeJSON(file, data) {
 app.post('/api/donors', (req, res) => {
   const donor = req.body;
   const required = ['name', 'age', 'bloodGroup', 'organ', 'contact', 'phone', 'location'];
+
   if (required.some(field => !donor[field])) {
     return res.status(400).json({ message: 'Please fill all required fields.' });
   }
+
   const donors = readJSON(donorFile);
   donors.push(donor);
   writeJSON(donorFile, donors);
   res.status(201).json({ message: 'Donor registered successfully!', donor });
 });
+
 app.get('/api/donors', (_, res) => {
   res.json(readJSON(donorFile));
 });
 
 // ------------------ Hospital Routes ------------------
 app.post('/api/hospitals', upload.single('hospitalImage'), (req, res) => {
-  console.log("📥 Hospital Registration Received");
-  console.log("➡️ req.body:", req.body);
-  console.log("📷 req.file:", req.file);
+  console.log("📥 Hospital Registration Request Received");
 
-  const { hospitalName, hospitalEmail, hospitalPhone, hospitalCity, availableOrgans } = req.body;
+  const { hospitalName, hospitalEmail, hospitalPhone, hospitalCity, organsAvailable } = req.body;
   const image = req.file ? `/hospitals/${req.file.filename}` : null;
 
-  if (!hospitalName || !hospitalEmail || !hospitalPhone || !hospitalCity || !availableOrgans) {
+  console.log("➡️ Form Data:", req.body);
+  console.log("🖼 Uploaded File:", req.file ? req.file.filename : "No file uploaded");
+
+  if (!hospitalName || !hospitalEmail || !hospitalPhone || !hospitalCity || !organsAvailable) {
+    console.log("❌ Missing required fields");
     return res.status(400).json({ message: 'Please fill all required fields.' });
   }
 
   const hospitals = readJSON(hospitalFile);
-  const newHospital = { hospitalName, hospitalEmail, hospitalPhone, hospitalCity, availableOrgans, image };
+  const newHospital = {
+    hospitalName,
+    hospitalEmail,
+    hospitalPhone,
+    hospitalCity,
+    availableOrgans: organsAvailable,
+    image
+  };
+
   hospitals.push(newHospital);
   writeJSON(hospitalFile, hospitals);
 
-  res.status(201).json({ message: 'Hospital registered successfully!', hospital: newHospital });
+  console.log("✅ Hospital Registered:", newHospital);
+  return res.status(201).json({
+    message: 'Hospital registered successfully!',
+    hospital: newHospital
+  });
 });
+
 app.get('/api/hospitals', (req, res) => {
   const hospitals = readJSON(hospitalFile);
   const q = req.query.query?.toLowerCase();
   const filtered = q
     ? hospitals.filter(h =>
-        h.hospitalName.toLowerCase().includes(q) || h.hospitalCity.toLowerCase().includes(q)
+        h.hospitalName.toLowerCase().includes(q) ||
+        h.hospitalCity.toLowerCase().includes(q)
       )
     : hospitals;
   res.json(filtered);
@@ -117,6 +138,7 @@ app.post('/api/bloodbanks', (req, res) => {
 
   res.status(201).json({ message: 'Blood Bank registered successfully!', bloodBank: newBank });
 });
+
 app.get('/api/bloodbanks', (req, res) => {
   const banks = readJSON(bankFile);
   const q = req.query.query?.toLowerCase();
@@ -140,16 +162,16 @@ app.post('/api/request-notify', async (req, res) => {
     const response = await client.messages.create({
       body: message,
       from: twilioPhone,
-      to: '+91' + phone // trial accounts: only verified numbers work
+      to: '+91' + phone // Only verified numbers on Twilio trial
     });
     res.json({ message: '✅ SMS sent successfully!', sid: response.sid });
   } catch (error) {
-    console.error('Twilio Error:', error?.response?.data || error.message || error);
+    console.error('❌ Twilio Error:', error?.response?.data || error.message || error);
     res.status(500).json({ message: '❌ Failed to send SMS via Twilio' });
   }
 });
 
-// ------------------ Test File Write Route ------------------
+// ------------------ File Write Test Route ------------------
 app.get('/test-write', (req, res) => {
   const testPath = path.join(uploadDir, 'test.txt');
   try {

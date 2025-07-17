@@ -5,17 +5,15 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const axios = require('axios');
 const twilio = require('twilio');
 
 const app = express();
-const PORT = process.env.PORT ||3000;
+const PORT = process.env.PORT || 3000;
 
 // Twilio credentials
 const twilioSID = 'ACc4147ad32927f610604c2ba78904155b';
 const twilioToken = 'a237da3d81de133daba749eecd01d61e';
 const twilioPhone = '+16084133743';
-
 const client = twilio(twilioSID, twilioToken);
 
 // File paths
@@ -37,7 +35,6 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use('/hospitals', express.static(path.join(__dirname, 'uploads', 'hospitals')));
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 // Multer for hospital image uploads
 const storage = multer.diskStorage({
@@ -77,6 +74,10 @@ app.get('/api/donors', (_, res) => {
 
 // ------------------ Hospital Routes ------------------
 app.post('/api/hospitals', upload.single('hospitalImage'), (req, res) => {
+  console.log("📥 Hospital Registration Received");
+  console.log("➡️ req.body:", req.body);
+  console.log("📷 req.file:", req.file);
+
   const { hospitalName, hospitalEmail, hospitalPhone, hospitalCity, availableOrgans } = req.body;
   const image = req.file ? `/hospitals/${req.file.filename}` : null;
 
@@ -130,24 +131,33 @@ app.get('/api/bloodbanks', (req, res) => {
 // ------------------ SMS Notify Route ------------------
 app.post('/api/request-notify', async (req, res) => {
   const { name, organ, bloodGroup, phone } = req.body;
-
   if (!name || !organ || !phone) {
     return res.status(400).json({ message: 'All required fields must be filled.' });
   }
 
   const message = `🩸 eDonor Alert\nName: ${name}\nOrgan: ${organ}\nBlood Group: ${bloodGroup || 'N/A'}`;
-
   try {
     const response = await client.messages.create({
       body: message,
       from: twilioPhone,
-      to: '+91' + phone // Only works for verified numbers on trial
+      to: '+91' + phone // trial accounts: only verified numbers work
     });
-
     res.json({ message: '✅ SMS sent successfully!', sid: response.sid });
   } catch (error) {
     console.error('Twilio Error:', error?.response?.data || error.message || error);
     res.status(500).json({ message: '❌ Failed to send SMS via Twilio' });
+  }
+});
+
+// ------------------ Test File Write Route ------------------
+app.get('/test-write', (req, res) => {
+  const testPath = path.join(uploadDir, 'test.txt');
+  try {
+    fs.writeFileSync(testPath, 'Hospital image test write OK');
+    res.send('✅ File write test successful!');
+  } catch (err) {
+    console.error("❌ File write error:", err.message);
+    res.status(500).send('❌ File write failed: ' + err.message);
   }
 });
 
